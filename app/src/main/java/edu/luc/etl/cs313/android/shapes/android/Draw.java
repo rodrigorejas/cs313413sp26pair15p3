@@ -42,7 +42,7 @@ public class Draw implements Visitor<Void> {
     @Override
     public Void onFill(final Fill f) {
         Style oldStyle = paint.getStyle();
-        paint.setStyle(Style.FILL);
+        paint.setStyle(Style.FILL_AND_STROKE);
 
         f.getShape().accept(this);
 
@@ -60,12 +60,11 @@ public class Draw implements Visitor<Void> {
 
     @Override
     public Void onLocation(final Location l) {
-        canvas.save();
         canvas.translate(l.getX(), l.getY());
 
         l.getShape().accept(this);
 
-        canvas.restore();
+        canvas.translate(-l.getX(), -l.getY());
         return null;
     }
 
